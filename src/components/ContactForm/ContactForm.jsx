@@ -2,15 +2,17 @@ import css from './ContactForm.module.css';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-
 const ContactForm = ({ onAddContact }) => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(3, 'Мінімум 3 символи')
-      .max(50, 'Максимум 20 символів')
+      .max(50, 'Максимум 50 символів')
       .required("Це поле обов'язкове!"),
     number: Yup.string()
-      .matches(/^[A-Za-zА-Яа-яЄєІіЇїҐґ]+$/, 'Це поле може містити тільки літери')
+      .matches(
+        /^[+\d][\d\s()-]*$/,
+        'Це поле може містити лише числа, пробіли, дужки та символ +'
+      )
       .required("Це поле обов'язкове!"),
   });
 
@@ -27,18 +29,33 @@ const ContactForm = ({ onAddContact }) => {
         <Form className={css.form}>
           <label>
             Name
-            <Field type="text" name="name" className={css.input} />
+            <Field
+              type="text"
+              name="name"
+              className={css.input}
+              placeholder="Введіть ім'я"
+            />
             <ErrorMessage name="name" component="div" className={css.error} />
           </label>
+
           <label>
             Number
-            <Field type="text" name="number" className={css.input} />
+            <Field
+              type="text"
+              name="number"
+              className={css.input}
+              placeholder="Введіть номер телефону"
+            />
             <ErrorMessage name="number" component="div" className={css.error} />
           </label>
-          <button type="submit" className={css.button}>Add Contact</button>
+
+          <button type="submit" className={css.button}>
+            Add Contact
+          </button>
         </Form>
       )}
     </Formik>
   );
 };
+
 export default ContactForm;
