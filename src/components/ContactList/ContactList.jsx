@@ -7,14 +7,13 @@ const ContactList = ({ contacts, onDeleteContact }) => {
     <div className={css.container}>
       <ul className={css.list}>
         {contacts.map(contact => (
-          <li className={css.item} key={contact.id}>
-            <Contact
-              id={contact.id} 
-              name={contact.name}
-              number={contact.number}
-              onDeleteContact={onDeleteContact} 
-            />
-          </li>
+          <Contact
+            key={contact.id}
+            id={contact.id}
+            name={contact.name}
+            number={contact.number}
+            onDeleteContact={onDeleteContact}
+          />
         ))}
       </ul>
     </div>
