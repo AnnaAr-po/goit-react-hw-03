@@ -1,8 +1,9 @@
 import css from './ContactForm.module.css';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { nanoid } from 'nanoid';
 
-const ContactForm = ({ onAddContact }) => {
+const ContactForm = ({ addContact }) => {
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(3, 'Мінімум 3 символи')
@@ -21,8 +22,9 @@ const ContactForm = ({ onAddContact }) => {
       initialValues={{ name: '', number: '' }}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
-        onAddContact(values);
-        resetForm();
+        const newContact = { id: nanoid(), ...values };
+        addContact(newContact);
+        resetForm(); 
       }}
     >
       {() => (
